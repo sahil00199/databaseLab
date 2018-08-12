@@ -43,21 +43,25 @@ class ResultSetOutput
 	
 	public static void toJSON(ResultSet rset)
 	{
+		System.out.println("Came here");
 		try
 		{
+			String totalLines = "";
 			ResultSetMetaData rsmd = rset.getMetaData();
 			int numColumns = rsmd.getColumnCount();
 			
-			//print out the column names first
-			System.out.println("<table>");
 			String[] columnNames = new String[numColumns];
-			//output is different from what is given in the example, but is what
-			//is usually done in html (the correct syntax and tags)
+			int[] columnTypes = new int[numColumns];
 			String currentLine = "{header: [";
 			for (int i = 1 ; i <= numColumns ; i ++)
 			{
 				currentLine = currentLine + "\"" + rsmd.getColumnName(i) + "\"";
+				if (i < numColumns)
+				{
+					currentLine = currentLine + ",";
+				}
 				columnNames[i - 1] = rsmd.getColumnName(i);
+				columnTypes[i - 1] = rsmd.getColumnType(i);
 			}
 			currentLine = currentLine + "],";
 			System.out.println(currentLine);
@@ -67,18 +71,33 @@ class ResultSetOutput
 			{
 				if (currentLine.equals(""))
 				{
-					currentLine = currentLine + ",\n";
+					currentLine = currentLine + ",\n\t";
 				}
 				currentLine = currentLine + "{";
 				for (int i = 1 ; i <= numColumns ; i ++)
 				{
-					currentLine = currentLine + "" + rset.getString(i) + "</td>";
+					currentLine = currentLine + columnNames[i - 1] + ":";
+					if (columnTypes[i-1] == -1 || columnTypes[i-1] == 1 || columnTypes[i-1] == 12)
+					{
+						currentLine = currentLine + "\"";
+					}
+					currentLine = currentLine + rset.getString(i);
+					if (columnTypes[i-1] == -1 || columnTypes[i-1] == 1 || columnTypes[i-1] == 12)
+					{
+						currentLine = currentLine + "\"";
+					}
+					if (i < numColumns)
+					{
+						currentLine = currentLine + ", ";
+					}
 				}
-				currentLine = currentLine + " </tr>";
+				currentLine = currentLine + " }";
 				//System.out.println(currentLine);
+				totalLines = totalLines + currentLine;
 				currentLine = "";
 			}
-			System.out.println("</table>");
+			System.out.println(totalLines);
+			System.out.println("\t]\n}");
 		}
 		catch (SQLException sqe)
 		{
@@ -107,7 +126,8 @@ public class lab4b_part1 {
 			try
 			{
 				rset = stmt.executeQuery(query);
-				rso.toHTML(rset);
+				//rso.toHTML(rset);
+				rso.toJSON(rset);
 			}
 			catch( SQLException sqle )
 			{
