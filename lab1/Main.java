@@ -16,12 +16,14 @@ public class Main {
 					+ " not exists (select * from subpart"
 					+ " where subpart.pID = pa.ID) union "
 					+ "select ID, h+1 from part,subpart,height"
-					+ " where ID=subpart.pID and subpart.spID = height.p)"
+					+ " where ID=subpart.pID and subpart.spID = height.p"
+					+ " and h < 100)"
 					+ " select p,max(h) from height group by p"
 					+ " order by max";
 			ResultSet rs=stmt.executeQuery(query);
-			Map< String,Integer> hm = 
-                    new HashMap< String,Integer>();
+			Statement stmt5=conn.createStatement();
+			stmt5.executeUpdate("create temporary  table cost ( ID varchar(50), cost "
+					+ "int NOT NULL Default 0.0);\n");
 			while(rs.next()) {
 				String s1=rs.getString(1);
 				PreparedStatement pstmt2 = conn.prepareStatement
@@ -37,11 +39,39 @@ public class Main {
 				int sum=0;
 				while(rs2.next())
 				{
-					sum=sum+(hm.get(rs2.getString(1)))*(rs2.getInt(2));
+					PreparedStatement pstmt3 = conn.prepareStatement
+							("select cost from cost where ID = ?");
+					pstmt3.setString(1, rs2.getString(1));
+					ResultSet r= pstmt3.executeQuery();
+					if(r.next())
+					{
+						sum=sum+ r.getInt(1)*(rs2.getInt(2));
+					}
+				//	sum=sum+(hm.get(rs2.getString(1)))*(rs2.getInt(2));
 				}
 				sum=sum+v;
-				hm.put(s1,sum);
-				System.out.println(s1+" "+sum);
+				PreparedStatement pstmt4 = conn.prepareStatement
+						("insert into cost values(?,?)");
+				pstmt4.setString(1, s1);
+				pstmt4.setInt(2, sum);
+				pstmt4.executeUpdate();
+				//hm.put(s1,sum);
+				//System.out.println(s1+" "+sum);
+			}
+			Scanner sc = new Scanner(System.in);
+			while(true) {
+				String inp=sc.next();
+				PreparedStatement pstmt5 = conn.prepareStatement
+						("select cost from cost where ID = ?");
+				pstmt5.setString(1, inp);
+				ResultSet rset= pstmt5.executeQuery();
+				if(rset.next())
+				{
+					System.out.println(inp+" "+rset.getInt(1));
+				}
+				else {
+					System.out.println("Such a part with ID=" + inp +" does not exist");
+				}
 			}
 		}
 		catch (Exception sqle)
