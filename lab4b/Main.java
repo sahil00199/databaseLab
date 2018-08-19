@@ -26,6 +26,7 @@ public class Main {
 					+ "int NOT NULL Default 0.0);\n");
 			while(rs.next()) {
 				String s1=rs.getString(1);
+				//System.out.println(s1);
 				PreparedStatement pstmt2 = conn.prepareStatement
 						("select cost from part where ID = ?");
 				pstmt2.setString(1,s1);
@@ -59,8 +60,9 @@ public class Main {
 				//System.out.println(s1+" "+sum);
 			}
 			Scanner sc = new Scanner(System.in);
-			while(true) {
-				String inp=sc.next();
+			//BufferedReader systemIn = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
+			while(sc.hasNextLine()) {
+				String inp=sc.nextLine();
 				PreparedStatement pstmt5 = conn.prepareStatement
 						("select cost from cost where ID = ?");
 				pstmt5.setString(1, inp);
