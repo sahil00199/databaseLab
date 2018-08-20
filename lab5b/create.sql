@@ -1,6 +1,8 @@
 drop table posts;
 drop table conversations;
 drop table users;
+drop sequence serial;
+
 create table users(
     uid varchar(10) primary key,
     name varchar(20),
@@ -21,3 +23,5 @@ create table posts (
     timestamp timestamp,
     text varchar(256)
 );
+
+create sequence serial start 1;

@@ -1,0 +1,15 @@
+2018-08-20 23:03:31.707 IST [6008] LOG:  listening on IPv4 address "127.0.0.1", port 5050
+2018-08-20 23:03:31.773 IST [6008] LOG:  listening on Unix socket "/home/sahil/postgresql/.s.PGSQL.5050"
+2018-08-20 23:03:31.988 IST [6009] LOG:  database system was interrupted; last known up at 2018-08-20 13:35:48 IST
+2018-08-20 23:03:32.448 IST [6009] LOG:  database system was not properly shut down; automatic recovery in progress
+2018-08-20 23:03:32.499 IST [6009] LOG:  redo starts at 0/19978A0
+2018-08-20 23:03:32.499 IST [6009] LOG:  invalid record length at 0/1997980: wanted 24, got 0
+2018-08-20 23:03:32.499 IST [6009] LOG:  redo done at 0/1997948
+2018-08-20 23:03:32.778 IST [6008] LOG:  database system is ready to accept connections
+2018-08-20 23:03:50.809 IST [6024] ERROR:  relation "messages" does not exist at character 15
+2018-08-20 23:03:50.809 IST [6024] STATEMENT:  select * from messages;
+2018-08-20 23:26:25.187 IST [6008] LOG:  received fast shutdown request
+2018-08-20 23:26:25.231 IST [6008] LOG:  aborting any active transactions
+2018-08-20 23:26:25.238 IST [6008] LOG:  worker process: logical replication launcher (PID 6015) exited with exit code 1
+2018-08-20 23:26:25.241 IST [6010] LOG:  shutting down
+2018-08-20 23:26:25.573 IST [6008] LOG:  database system is shut down
