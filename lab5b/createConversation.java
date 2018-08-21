@@ -1,4 +1,4 @@
-
+package createConversation;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
 import java.io.PrintWriter;
 import javax.servlet.http.*;
+import Home.*;
 
 /**
  * Servlet implementation class createConversation
@@ -42,6 +43,7 @@ public class createConversation extends HttpServlet {
 		}
 		else
 		{
+			PrintWriter out = response.getWriter();
 			HttpSession currentSession = request.getSession(false);
 			String user1 = (String) currentSession.getAttribute("id");
 			String user2 = request.getParameter("id");
@@ -85,7 +87,7 @@ public class createConversation extends HttpServlet {
 				pstmt4.setString(1, user1);
 				pstmt4.setString(2, user2);
 				
-				PrintWriter out = response.getWriter();
+				//PrintWriter out = response.getWriter();
 				//check if both the users exist
 				ResultSet rset1 = pstmt1.executeQuery();
 				ResultSet rset2 = pstmt2.executeQuery();

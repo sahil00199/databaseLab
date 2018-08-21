@@ -52,11 +52,11 @@ public class Home extends HttpServlet {
 			PreparedStatement pstmt=conn.prepareStatement("with q as (select timestamp,"
 					+ "thread_id,text from posts as p where p.timestamp = (select max(timestamp) "
 					+ "from posts as p2 where p2.thread_id=p.thread_ID group by thread_id))"
-					+ " (select uid1 as uid,text,timestamp,q.thread_id as thread_id "
-					+ "from conversations,q where "
-					+ "conversations.thread_id = q.thread_id and uid2=?) "
-					+ "union (select uid2 as uid,text,timestamp,q.thread_id as thread_id from conversations,"
-					+ "q where conversations.thread_id = q.thread_id and uid1=?)"
+					+ " (select name,text,timestamp,q.thread_id as thread_id "
+					+ "from conversations,q,users where "
+					+ "conversations.thread_id = q.thread_id and uid2=? and uid1=uid) "
+					+ "union (select name,text,timestamp,q.thread_id as thread_id from conversations,"
+					+ "q,users where conversations.thread_id = q.thread_id and uid1=? and uid2=uid)"
 					+ " order by timestamp desc;\n" + 
 					""
 						);

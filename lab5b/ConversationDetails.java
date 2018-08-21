@@ -1,5 +1,5 @@
-
-
+package ConversationsDetail;
+import Home.*;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,14 +13,14 @@ import javax.servlet.http.*;
 /**
  * Servlet implementation class ConversationsDetail
  */
-@WebServlet("/ConversationsDetail")
-public class ConversationsDetail extends HttpServlet {
+@WebServlet("/ConversationDetails")
+public class ConversationDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ConversationsDetail() {
+    public ConversationDetails() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -76,16 +76,16 @@ public class ConversationsDetail extends HttpServlet {
 		else
 		{
 			PrintWriter out = response.getWriter();
-			String threadid = request.getParameter("threadid");
+			int threadid = Integer.parseInt(request.getParameter("threadid"));
 			try
 			( Connection conn = DriverManager.getConnection(
 		    		Home.url, Home.name, Home.passwordSQL);
-			  PreparedStatement pstmt1 = conn.prepareStatement("select * from conversations where thread_id = ? ;");
+			  PreparedStatement pstmt1 = conn.prepareStatement("select * from conversations where thread_id = ? ");
 			  PreparedStatement pstmt2 = conn.prepareStatement("select uid, timestamp, text from posts"
-			  		+ "where thread_id = ? order by timestamp desc ;");
+			  		+ " where thread_id = ? order by timestamp desc ");
 			)
 			{
-				pstmt1.setString(1, threadid);
+				pstmt1.setInt(1, threadid);
 				ResultSet rset1 = pstmt1.executeQuery();
 				if (! rset1.next())
 				{
@@ -107,14 +107,14 @@ public class ConversationsDetail extends HttpServlet {
 				}
 				else
 				{
-					pstmt2.setString(1, threadid);
+					pstmt2.setInt(1, threadid);
 					ResultSet rset2 = pstmt2.executeQuery();
 					out.println("<html><head><title><Conversation View></title></head><body>");
 					toHTML(rset2, out);
-					
+					System.out.println("came here"+threadid);
 					//now print the form for a new message
 					out.println("<form action=\"NewMessage\" method=\"post\">\n" + 
-							"            <input id=\"threadid\" value=" + threadid + " type=\"hidden\">\n" + 
+							"            <input name=\"threadid\" value=\"" + threadid + "\" type=\"hidden\">\n" + 
 							"            New Message: <input type=\"text\" id=\"message\" name=\"message\" >\n" + 
 							"            <input type=\"submit\" value=\"Post\">\n" + 
 							"        </form>\n" + 

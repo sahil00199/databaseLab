@@ -1,4 +1,4 @@
-
+package NewMessage;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
 import javax.servlet.http.*;
 import java.io.PrintWriter;
+import Home.*;
 /**
  * Servlet implementation class NewMessage
  */
@@ -42,19 +43,21 @@ public class NewMessage extends HttpServlet {
 		}
 		else
 		{
-			String threadid = (String) request.getAttribute("threadid");
-			String message = (String) request.getAttribute("message");
+			String threadid = (String) request.getParameter("threadid");
+			
+			int threadid2= Integer.parseInt(threadid);
+			String message = (String) request.getParameter("message");
 			String user = (String) request.getSession().getAttribute("id");
 			try
 			( Connection conn = DriverManager.getConnection(
 		    		Home.url, Home.name, Home.passwordSQL);
 			  PreparedStatement pstmt1 = conn.prepareStatement("select * from conversations where thread_id = ? and (uid1 = ? or uid2 = ?) ;");
-			  PreparedStatement pstmt2 = conn.prepareStatement("insert into posts values (nextval('serial'),"
-			  		+ " ?, ?, now(), ?");
+			  PreparedStatement pstmt2 = conn.prepareStatement("insert into posts(thread_id,uid,timestamp,text)values("
+			  		+ " ?, ?, now(), ?)");
 			)
 			{
 				PrintWriter out = response.getWriter();
-				pstmt1.setString(1, threadid);
+				pstmt1.setInt(1, threadid2);
 				pstmt1.setString(2, user);
 				pstmt1.setString(3, user);
 				//first check if such a conversation exists
@@ -79,7 +82,7 @@ public class NewMessage extends HttpServlet {
 				}
 				else
 				{
-					pstmt2.setString(1,  threadid);
+					pstmt2.setInt(1,  threadid2);
 					pstmt2.setString(2, user);
 					pstmt2.setString(3, message);
 					int returnStatus = pstmt2.executeUpdate();
