@@ -1,4 +1,4 @@
-
+package Home;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,13 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
 import javax.servlet.http.*;
 import java.io.PrintWriter;
+
 /**
  * Servlet implementation class Home
  */
 @WebServlet("/Home")
 public class Home extends HttpServlet {
-	public static String url = "jdbc:postgresql://localhost:5050/postgres";
-	public static String name = "sahil";
+	public static String url = "jdbc:postgresql://localhost:5080/postgres";
+	public static String name = "preey";
 	public static String passwordSQL = "";
 	private static final long serialVersionUID = 1L;
        
@@ -74,23 +75,23 @@ public class Home extends HttpServlet {
 			pstmt.setString(4, id);
 			ResultSet rs=pstmt.executeQuery();
 			toHTML(rs,out,3);
-<<<<<<< HEAD
-			out.println("<br><hr><br>The following are the conversations with which you exhanged no messages");
-			PreparedStatement pstmt2=conn.prepareStatement("(select uid1 as uid "
-					+ ",thread_id from conversations as c where"
-					+ " uid2=? and not exists (select * from posts as p where p.thread_id=c.thread_id))"
-					+ " union (select uid2 as uid,thread_id "
-					+ "from conversations as c where uid1=? and not exists "
-					+ "(select * from posts as p where p.thread_id=c.thread_id))");
-			pstmt2.setString(1, id);
-			pstmt2.setString(2, id);
-			ResultSet rs2=pstmt2.executeQuery();
-			toHTML(rs2,out,1);
-			out.println("        <br><br><a href = \"Home\"> Home </a>\n" + 
-					"        &nbsp &nbsp" + 
-					"        <a href = \"Logout\"> Logout </a>\n"
-					+ "</body>\n" + "</body></html>");
-=======
+//<<<<<<< HEAD
+//			out.println("<br><hr><br>The following are the conversations with which you exhanged no messages");
+//			PreparedStatement pstmt2=conn.prepareStatement("(select uid1 as uid "
+//					+ ",thread_id from conversations as c where"
+//					+ " uid2=? and not exists (select * from posts as p where p.thread_id=c.thread_id))"
+//					+ " union (select uid2 as uid,thread_id "
+//					+ "from conversations as c where uid1=? and not exists "
+//					+ "(select * from posts as p where p.thread_id=c.thread_id))");
+//			pstmt2.setString(1, id);
+//			pstmt2.setString(2, id);
+//			ResultSet rs2=pstmt2.executeQuery();
+//			toHTML(rs2,out,1);
+//			out.println("        <br><br><a href = \"Home\"> Home </a>\n" + 
+//					"        &nbsp &nbsp" + 
+//					"        <a href = \"Logout\"> Logout </a>\n"
+//					+ "</body>\n" + "</body></html>");
+//=======
 			out.println("No messages were exchanged with those with a null in text and timestamp");
 //			PreparedStatement pstmt2=conn.prepareStatement("(select name, null as text, null as timestamp "
 //					+ ",thread_id from conversations as c,users where"
@@ -103,7 +104,7 @@ public class Home extends HttpServlet {
 //			ResultSet rs2=pstmt2.executeQuery();
 //			toHTML(rs2,out,3);
 			out.println("</body></html>");
->>>>>>> df2787ec131d67392f51dcfd4b3aaa0ac385d093
+
 			}
 			catch(SQLException sqex)
 			{
