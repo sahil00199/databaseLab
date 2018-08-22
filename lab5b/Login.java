@@ -1,4 +1,3 @@
-package Login;
 
 import java.io.IOException;
 import java.sql.*;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import javax.servlet.http.*;
-import Home.*;
 /**
  * Servlet implementation class Login
  */
@@ -117,8 +115,8 @@ public class Login extends HttpServlet {
 				//System.out.println("Invalid Credentials");
 				PrintWriter out = response.getWriter();
 				out.println("<html> <head><title>Login Page</title></head>");
-				out.println("<body>");
-				out.println("<h3>Name: Sahil Shah, Roll Number: 160050005</h3><br>");
+				out.println("<body>"+ "<center><h1>WhatASap</h1><br></center>");
+				out.println("<h3>Name: Sahil Shah, Preey Shah, Roll Number: 160050005, 160050008</h3><br>");
 				out.println("<form action = \"Login\" method = \"get\">");
 				out.println(" Enter your name: <input type=\"text\" name = \"name\">");
 				out.println("<br>");

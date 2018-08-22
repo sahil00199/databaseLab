@@ -1,4 +1,3 @@
-package Logout;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -26,8 +25,15 @@ public class Logout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		if (request.getSession(false) == null)
+		{
+			System.out.println("The user was not logged in anyway");
+		}
+		else
+		{
+			request.getSession().invalidate();
+		}
+		response.sendRedirect("Login");
 	}
 
 	/**

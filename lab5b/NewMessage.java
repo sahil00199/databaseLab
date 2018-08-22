@@ -1,4 +1,3 @@
-package NewMessage;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
 import javax.servlet.http.*;
 import java.io.PrintWriter;
-import Home.*;
 /**
  * Servlet implementation class NewMessage
  */

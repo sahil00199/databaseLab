@@ -1,3 +1,5 @@
+package ConversationsDetail;
+import Home.*;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +37,7 @@ public class ConversationDetails extends HttpServlet {
 			int numColumns = rsmd.getColumnCount();
 			
 			//print out the column names first
-			out.println("<table class = \"scroll\">");
+			out.println("<table>");
 			//output is different from what is given in the example, but is what
 			//is usually done in html (the correct syntax and tags)
 			String currentLine = "\t<tr>";
@@ -45,17 +47,15 @@ public class ConversationDetails extends HttpServlet {
 			}
 			currentLine = currentLine + " </tr>";
 			out.println(currentLine);
-			int count = 0;
 			while(rset.next())
 			{
-				currentLine = "\t<tr id = " + Integer.toString(count) + ">";
+				currentLine = "\t<tr>";
 				for (int i = 1 ; i <= numColumns ; i ++)
 				{
 					currentLine = currentLine + " <td>" + rset.getString(i) + "</td>";
 				}
 				currentLine = currentLine + " </tr>";
 				out.println(currentLine);
-				count +=1 ;
 			}
 			out.println("</table>");
 		}
@@ -109,21 +109,16 @@ public class ConversationDetails extends HttpServlet {
 				{
 					pstmt2.setInt(1, threadid);
 					ResultSet rset2 = pstmt2.executeQuery();
-					out.println("<html><head><title><Conversation View></title></head><style>"
-							+ "table, th, td {\n    border: 1px solid black;\npadding: 5px}\n " 
-							+".scroll tbody { display:block; height:200px;  overflow:auto;}</style><body>"
-							+ "<center><h1>WhatASap</h1><br></center>");
+					out.println("<html><head><title><Conversation View></title></head><body>");
 					toHTML(rset2, out);
+					System.out.println("came here"+threadid);
 					//now print the form for a new message
-					out.println("<br><hr><form action=\"NewMessage\" method=\"post\">\n" + 
+					out.println("<form action=\"NewMessage\" method=\"post\">\n" + 
 							"            <input name=\"threadid\" value=\"" + threadid + "\" type=\"hidden\">\n" + 
 							"            New Message: <input type=\"text\" id=\"message\" name=\"message\" >\n" + 
 							"            <input type=\"submit\" value=\"Post\">\n" + 
 							"        </form>\n" + 
-							"        <br><br><a href = \"Home\"> Home </a>\n" + 
-							"        &nbsp &nbsp" + 
-							"        <a href = \"Logout\"> Logout </a>\n"
-							+ "</body>\n" + 
+							"    </body>\n" + 
 							"</html>");
 				}
 			}

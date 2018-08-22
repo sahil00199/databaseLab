@@ -1,6 +1,7 @@
 drop table posts;
 drop table conversations;
 drop table users;
+drop table password;
 drop sequence serial;
 
 create table users(
@@ -22,6 +23,11 @@ create table posts (
     uid varchar(10) references users,
     timestamp timestamp,
     text varchar(256)
+);
+
+create table password(
+    id varchar(10) references users(uid),
+    password varchar(20)
 );
 
 create sequence serial start 1;

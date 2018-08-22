@@ -1,4 +1,3 @@
-package createConversation;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
 import java.io.PrintWriter;
 import javax.servlet.http.*;
-import Home.*;
 
 /**
  * Servlet implementation class createConversation
@@ -28,7 +26,7 @@ public class createConversation extends HttpServlet {
     
     private static int min(int a, int b) 
     {
-    	if (a > b) return a;
+    	if (a < b) return a;
     	return b;
     }
 
@@ -131,6 +129,25 @@ public class createConversation extends HttpServlet {
 					return;
 				}
 				
+				if (user1.equalsIgnoreCase(user2))
+				{
+					out.println("<html>\n" + 
+							"    <head>\n" + 
+							"        <title>\n" + 
+							"            Error page\n" + 
+							"        </title>\n" + 
+							"    </head>\n" + 
+							"    <body>\n" + 
+							"        <h3> A chat already exists between the given users! </h3>\n" + 
+							"        <br>\n" + 
+							"        <a href = \"Home\"> Home </a>\n" + 
+							"        <br>\n" + 
+							"        <a href = \"Logout\"> Logout </a>\n" + 
+							"    </body>\n" + 
+							"</html>\n");
+					return;
+				}
+				
 				//we are now good to go ahead and create a new chat
 				int returnStatus = pstmt4.executeUpdate();
 				if (returnStatus == 1)
@@ -141,7 +158,8 @@ public class createConversation extends HttpServlet {
 							"            Confirmation Page\n" + 
 							"        </title>\n" + 
 							"    </head>\n" + 
-							"    <body>\n" + 
+							"    <body>\n"
+							+ "<h1>WhatASap</h1><br>" + 
 							"        <h3> Successfully created a new chat :D  </h3>\n" + 
 							"        <br>\n" + 
 							"        <a href = \"Home\"> Home </a>\n" + 
