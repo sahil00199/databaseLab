@@ -58,13 +58,23 @@ public class Home extends HttpServlet {
 					+ "conversations.thread_id = q.thread_id and uid2=? and uid1=uid) "
 					+ "union (select name,text,timestamp,q.thread_id as thread_id from conversations,"
 					+ "q,users where conversations.thread_id = q.thread_id and uid1=? and uid2=uid)"
-					+ " order by timestamp desc;\n" + 
-					""
+					+ " union  "
+					+ "(select name, null as text, null as timestamp "
++ ",thread_id from conversations as c,users where"
++ " uid2=? and uid1=uid and not exists (select * from posts as p"
++ " where p.thread_id=c.thread_id))"
++ " union (select name,null as text, null as timestamp,thread_id "
++ "from conversations as c,users where uid1=? and uid2=uid and not exists "
++ "(select * from posts as p where p.thread_id=c.thread_id))"
++ "  order by timestamp desc nulls last"
 						);
 			pstmt.setString(1, id);
 			pstmt.setString(2, id);
+			pstmt.setString(3, id);
+			pstmt.setString(4, id);
 			ResultSet rs=pstmt.executeQuery();
 			toHTML(rs,out,3);
+<<<<<<< HEAD
 			out.println("<br><hr><br>The following are the conversations with which you exhanged no messages");
 			PreparedStatement pstmt2=conn.prepareStatement("(select uid1 as uid "
 					+ ",thread_id from conversations as c where"
@@ -80,6 +90,20 @@ public class Home extends HttpServlet {
 					"        &nbsp &nbsp" + 
 					"        <a href = \"Logout\"> Logout </a>\n"
 					+ "</body>\n" + "</body></html>");
+=======
+			out.println("No messages were exchanged with those with a null in text and timestamp");
+//			PreparedStatement pstmt2=conn.prepareStatement("(select name, null as text, null as timestamp "
+//					+ ",thread_id from conversations as c,users where"
+//					+ " uid2=? and uid1=uid and not exists (select * from posts as p where p.thread_id=c.thread_id))"
+//					+ " union (select name,null as text, null as timestamp,thread_id "
+//					+ "from conversations as c,users where uid1=? and uid2=uid and not exists "
+//					+ "(select * from posts as p where p.thread_id=c.thread_id))");
+//			pstmt2.setString(1, id);
+//			pstmt2.setString(2, id);
+//			ResultSet rs2=pstmt2.executeQuery();
+//			toHTML(rs2,out,3);
+			out.println("</body></html>");
+>>>>>>> df2787ec131d67392f51dcfd4b3aaa0ac385d093
 			}
 			catch(SQLException sqex)
 			{
@@ -122,7 +146,7 @@ public class Home extends HttpServlet {
 			{
 				currentLine = currentLine + " <th>" + rsmd.getColumnName(i) + "</th>";
 			}
-			currentLine = currentLine + " <th>" + " Button - Create Conversations " + "</th>";
+			currentLine = currentLine + " <th>" + " Press to display Conversations " + "</th>";
 			currentLine = currentLine + " </tr>";
 		out.println(currentLine);
 			while(rset.next())
