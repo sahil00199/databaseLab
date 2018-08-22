@@ -1,0 +1,3 @@
+The script create.sql defines the database and the script data.sql loads some basic data into the system
+
+The flow is as defined and the landing page is "index.html". Once there, one can navigate easily through the buttons at the bottom of the page
