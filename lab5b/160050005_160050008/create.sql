@@ -1,7 +1,7 @@
+drop table password;
 drop table posts;
 drop table conversations;
 drop table users;
-drop table password;
 drop sequence serial;
 
 create table users(
