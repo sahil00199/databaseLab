@@ -108,7 +108,7 @@ function modifyTable(uid)
 		if (this.readyState == 4 && this.status == 200)
 		{
 			var currentData = JSON.parse(this.responseText).data;
-			var currentStr = "<table> <tr> <th> User Id </th>" + 
+			var currentStr = "<table class = \"display\"> <tr> <th> User Id </th>" + 
 	    	 "<th> Timestamp </th> <th> Text </th> </tr>";
 	    	 for (var i = 0 ; i < currentData.length ; i ++)
 	    		 {
@@ -119,8 +119,22 @@ function modifyTable(uid)
 	    		 	currentStr += "</tr>";
 	    		 	//document.getElementById("txtHint").innerHTML += currentStr;
 	    		 }
-	    	 currentStr += "</table>"
+	    	currentStr += "</table>";
+	    	currentStr += "<form id=newmessage>";
+			currentStr += " Enter your message: <input type=\"text\" id = \"message\">";
+			currentStr += "<input type=\"hidden\" name=\"uid\" value=\""+uid+"\" />";
+			currentStr += "<input type=\"submit\"";
+			currentStr += "<input class=\"button\" name=\"submit\" type=\"submit\" " ;
+			currentStr += "value=\"Submit\" />";
+			currentStr += "</form>";
+
 	    	 document.getElementById("content").innerHTML = currentStr;
+	    	     $("#newmessage").on('submit', function ()
+			    {
+			    	createNewMessage(uid,$("#message").val());
+			    	return false;
+			    });
+
 		}
 	};
     xhttp.open("GET", "ConversationDetail?other_id=" + uid, true);
