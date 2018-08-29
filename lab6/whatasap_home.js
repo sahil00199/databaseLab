@@ -141,15 +141,45 @@ function modifyTable(uid)
     xhttp.send();
 }
 
+function autohelper(request,response)
+{
+	console.log("Came here");
+    var xhttp;
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+         if (this.readyState == 4 && this.status == 200){
+        	 json= JSON.parse(this.responseText);
+        	 console.log(json.data);
+             response(json.data);
+         }
+         }
+    xhttp.open("GET", "AutoCompleteUser?partial="+request.term, true);
+      xhttp.send();
+     
+}
+
 function showCreateConversation()
 {
-	var currentHTML = 	"<form id=newconversation onsubmit=\"createNewConversation(this.conversation.value)\">" +
+	var currentHTML = 	"<form id=\"newconversation\" onsubmit=\"createNewConversation(this.conversation.value)\">" +
 	" Enter the uid: <input type=\"text\" id = \"conversation\" name=\"uid\">"+
 	//"<input type=\"submit\""
 	"<input class=\"button\" name=\"submit\" type=\"submit\" " +
 	"value=\"Submit\" />"+
 	"</form>";
 	document.getElementById("newConvo").innerHTML = currentHTML;
+	$("#conversation").autocomplete({
+        source : function(request,response){
+        	var xhttp;
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                 if (this.readyState == 4 && this.status == 200){
+                	 json= JSON.parse(this.responseText);
+                	 response(json.data);
+                 }
+                 }
+            xhttp.open("GET", "AutoCompleteUser?partial="+request.term, true);
+              xhttp.send();}
+    });
 }
 
 function createNewMessage(uid,message)

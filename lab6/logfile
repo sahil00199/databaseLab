@@ -11,3 +11,8 @@
 2018-08-29 10:44:13.789 IST [19239] ERROR:  insert or update on table "conversations" violates foreign key constraint "conversations_uid2_fkey"
 2018-08-29 10:44:13.789 IST [19239] DETAIL:  Key (uid2)=(sdulashdf) is not present in table "users".
 2018-08-29 10:44:13.789 IST [19239] STATEMENT:  insert into conversations values ($1, $2)
+2018-08-29 18:46:35.164 IST [17507] LOG:  received fast shutdown request
+2018-08-29 18:46:35.211 IST [17507] LOG:  aborting any active transactions
+2018-08-29 18:46:35.213 IST [17507] LOG:  worker process: logical replication launcher (PID 17514) exited with exit code 1
+2018-08-29 18:46:35.214 IST [17509] LOG:  shutting down
+2018-08-29 18:46:35.395 IST [17507] LOG:  database system is shut down
