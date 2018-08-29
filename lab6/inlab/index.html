@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+window.onload = function() {
+  var xhttp;    
+   xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	 var currentData = JSON.parse(this.responseText).data;
+    	 var currentStr = '<option value="">Select a user:</option>';
+    	 for (var i = 0 ; i < currentData.length; i ++){
+    		 currentStr += "<option value = \"" + currentData[i].uid + "\">" + currentData[i].uid + "</option>";
+    	 }
+    	 document.getElementById("userList").innerHTML = currentStr;
+    }
+  };
+  xhttp.open("GET", "AllConversations", true);
+  xhttp.send();
+}
+</script>
+</head>
+<style>
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+}
+th,td {
+  padding: 5px;
+}
+</style>
+<body align=center>
+
+<h2>The XMLHttpRequest Object</h2>
+<h3> Sahil Shah, 160050005 </h3>
+
+<form action="" > 
+<select name="customers" onchange="showCustomer(this.value)" id = "userList">
+<option value="">Select a user:</option>
+</select>
+</form>
+<br>
+<div id="txtHint">Customer info will be listed here...</div>
+
+<script>
+function showCustomer(str) {
+  var xhttp;    
+  if (str == "") {
+    document.getElementById("txtHint").innerHTML = "";
+    return;
+  }
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	 var currentData = JSON.parse(this.responseText).data;
+    	 var currentStr = "<table> <tr> <th> uid </th>" + 
+    	 "<th> timestamp </th> <th> text </th> </tr>";
+    	 for (var i = 0 ; i < currentData.length ; i ++)
+    		 {
+    		 	currentStr += "<tr>";
+    		 	currentStr += "<td>" + currentData[i].uid + " </td>";
+    		 	currentStr += "<td>" + currentData[i].timestamp + " </td>";
+    		 	currentStr += "<td>" + currentData[i].text + " </td>";
+    		 	currentStr += "</tr>";
+    		 	document.getElementById("txtHint").innerHTML += currentStr;
+    		 }
+    	 currentStr += "</table>"
+    	 document.getElementById("txtHint").innerHTML = currentStr;
+    }
+  };
+  xhttp.open("GET", "ConversationDetail?other_id="+str, true);
+  xhttp.send();
+}
+</script>
+
+</body>
+</html>

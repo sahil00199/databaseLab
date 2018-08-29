@@ -43,7 +43,9 @@ public class Home extends HttpServlet {
 				//"        </thead>" + 
 				//"    </table>" + 
 				"    <div id=\"content\">" +
-				"	 </div> <br><br>" + 
+				"	 </div> " +
+				"<button onclick=\"showCreateConversation()\"> Create a new conversation </button> " +
+				"<div id=\"newConvo\"></div><br><br>" + 
 				"</body>" + 
 				"</html>";
 		response.setContentType("text/html");

@@ -51,14 +51,8 @@ function resetTable()
 	"<th>User Id</th>" +
 	"<th>Timestamp of last message</th>" +
 	"<th>Number of messages exchanged</th>" +
-	"</tr></thead></table>  <br>"
-	+
-	"<form id=newconversation>" +
-	" Enter the uid: <input type=\"text\" id = \"conversation\">"+
-//"<input type=\"submit\""
-"<input class=\"button\" name=\"submit\" type=\"submit\" " +
-"value=\"Submit\" />"+
-"</form>";
+	"</tr></thead></table>  <br>";
+	document.getElementById("newConvo").innerHTML = "";
 	contentTable = $("#contentTable").DataTable({
 	columns: [{data:"uid"}, {data:"last_timestamp"}, {data:"num_msgs"}]
 	});
@@ -84,30 +78,64 @@ function resetTable()
 
 function modifyTable(uid)
 {
-	document.getElementById("content").innerHTML = "<table id = \"contentTable\" class = \"display\">" +
-	"<thead><tr>" +
-	"<th>User Id</th>" +
-	"<th>Timestamp</th>" +
-	"<th>Text</th>" +
-	"</tr></thead></table> + <br>"
-	+
-	"<form id=newmessage>" +
-	" Enter your message: <input type=\"text\" id = \"message\">"+
-"<input type=\"hidden\" name=\"uid\" value=\""+uid+"\" />"+
-//"<input type=\"submit\""
-"<input class=\"button\" name=\"submit\" type=\"submit\" " +
-"value=\"Submit\" />"+
-"</form>";
-	contentTable = $("#contentTable").DataTable({
-    	columns: [{data:"uid"}, {data:"timestamp"}, {data:"text"}]
-    });
-    contentTable.ajax.url("ConversationDetail?other_id=" + uid).load();
-    $("#newmessage").on('submit', function ()
-    {
-    	createNewMessage(uid,$("#message").val());
-    	return false;
-    });
-    
+// 	document.getElementById("content").innerHTML = "<table id = \"contentTable\" class = \"display\">" +
+// 	"<thead><tr>" +
+// 	"<th>User Id</th>" +
+// 	"<th>Timestamp</th>" +
+// 	"<th>Text</th>" +
+// 	"</tr></thead></table> + <br>"
+// 	+
+// 	"<form id=newmessage>" +
+// 	" Enter your message: <input type=\"text\" id = \"message\">"+
+// "<input type=\"hidden\" name=\"uid\" value=\""+uid+"\" />"+
+// //"<input type=\"submit\""
+// "<input class=\"button\" name=\"submit\" type=\"submit\" " +
+// "value=\"Submit\" />"+
+// "</form>";
+// 	contentTable = $("#contentTable").DataTable({
+//     	columns: [{data:"uid"}, {data:"timestamp"}, {data:"text"}]
+//     });
+//     contentTable.ajax.url("ConversationDetail?other_id=" + uid).load();
+//     $("#newmessage").on('submit', function ()
+//     {
+//     	createNewMessage(uid,$("#message").val());
+//     	return false;
+//     });
+
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function()
+	{
+		if (this.readyState == 4 && this.status == 200)
+		{
+			var currentData = JSON.parse(this.responseText).data;
+			var currentStr = "<table> <tr> <th> User Id </th>" + 
+	    	 "<th> Timestamp </th> <th> Text </th> </tr>";
+	    	 for (var i = 0 ; i < currentData.length ; i ++)
+	    		 {
+	    		 	currentStr += "<tr>";
+	    		 	currentStr += "<td>" + currentData[i].uid + " </td>";
+	    		 	currentStr += "<td>" + currentData[i].timestamp + " </td>";
+	    		 	currentStr += "<td>" + currentData[i].text + " </td>";
+	    		 	currentStr += "</tr>";
+	    		 	//document.getElementById("txtHint").innerHTML += currentStr;
+	    		 }
+	    	 currentStr += "</table>"
+	    	 document.getElementById("content").innerHTML = currentStr;
+		}
+	};
+    xhttp.open("GET", "ConversationDetail?other_id=" + uid, true);
+    xhttp.send();
+}
+
+function showCreateConversation()
+{
+	var currentHTML = 	"<form id=newconversation onsubmit=\"createNewConversation(this.conversation.value)\">" +
+	" Enter the uid: <input type=\"text\" id = \"conversation\" name=\"uid\">"+
+	//"<input type=\"submit\""
+	"<input class=\"button\" name=\"submit\" type=\"submit\" " +
+	"value=\"Submit\" />"+
+	"</form>";
+	document.getElementById("newConvo").innerHTML = currentHTML;
 }
 
 function createNewMessage(uid,message)
@@ -148,6 +176,9 @@ function createNewConversation(uid)
 	if(!(json_object.status))
 		{
 		alert("Conversation not created due to some error");
+		}else
+		{
+			alert("New conversation created successfully!");
 		}
 		 }
 		 resetTable();
