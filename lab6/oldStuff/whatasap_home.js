@@ -10,8 +10,7 @@ $(document).ready(function() {
     });
     
     */
-    document.getElementById("content").innerHTML = "Search Conversations:  <input id=\"showConv\" type=\"text\"/>" +
-    		"<table id = \"contentTable\" class = \"display\">" +
+    document.getElementById("content").innerHTML = "<table id = \"contentTable\" class = \"display\">" +
     		"<thead><tr>" +
     		"<th>User Id</th>" +
     		"<th>Timestamp of last message</th>" +
@@ -35,29 +34,6 @@ $(document).ready(function() {
         //$('#trial').html(contentTable.row(this).data()["uid"]);
     } );
     
-    $("#showConv").autocomplete({
-		source : function(request,response){
-        	var xhttp;
-            xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function(){
-                 if (this.readyState == 4 && this.status == 200){
-                	 json= JSON.parse(this.responseText);
-                	 response(json.data);
-                 }
-                 }
-            xhttp.open("GET", "AutoCompleteUser?partial="+request.term+"&location=top", true);
-              xhttp.send();}
-	});
-	$("#showConv").autocomplete({
-		select: function(event,ui){
-			if(event.type=="autocompleteselect")
-				{
-					modifyTable(ui.item.label);
-				}
-			
-		}
-	});
-    
     
     
     //load div contents asynchronously, with a call back function
@@ -70,7 +46,7 @@ $(document).ready(function() {
 
 function resetTable()
 {
-	document.getElementById("content").innerHTML = "Search Conversations:  <input id=\"showConv\" type=\"text\"/>" + "<table id = \"contentTable\" class = \"display\">" +
+	document.getElementById("content").innerHTML = "<table id = \"contentTable\" class = \"display\">" +
 	"<thead><tr>" +
 	"<th>User Id</th>" +
 	"<th>Timestamp of last message</th>" +
@@ -98,42 +74,6 @@ function resetTable()
         modifyTable(contentTable.row(this).data()["uid"]);
         //$('#trial').html(contentTable.row(this).data()["uid"]);
     } );
-	$('#contentTable_filter label input').autocomplete({
-        source : function(request,response){
-        	console.log("Came here:D");
-        	var xhttp;
-            xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function(){
-                 if (this.readyState == 4 && this.status == 200){
-                	 json= JSON.parse(this.responseText);
-                	 response(json.data);
-                 }
-                 }
-            xhttp.open("GET", "AutoCompleteUser?partial="+request.term+"&location=top", true);
-              xhttp.send();}
-    });
-	$("#showConv").autocomplete({
-		source : function(request,response){
-        	var xhttp;
-            xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function(){
-                 if (this.readyState == 4 && this.status == 200){
-                	 json= JSON.parse(this.responseText);
-                	 response(json.data);
-                 }
-                 }
-            xhttp.open("GET", "AutoCompleteUser?partial="+request.term+"&location=top", true);
-              xhttp.send();}
-	});
-	$("#showConv").autocomplete({
-		select: function(event,ui){
-			if(event.type=="autocompleteselect")
-				{
-					modifyTable(ui.item.label);
-				}
-			
-		}
-	});
 }
 
 function modifyTable(uid)
@@ -237,7 +177,7 @@ function showCreateConversation()
                 	 response(json.data);
                  }
                  }
-            xhttp.open("GET", "AutoCompleteUser?partial="+request.term+"&location=bottom", true);
+            xhttp.open("GET", "AutoCompleteUser?partial="+request.term, true);
               xhttp.send();}
     });
 }
