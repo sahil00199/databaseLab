@@ -1,0 +1,9 @@
+Sahil Shah: 160050005
+Preey Shah: 160050008
+
+To run the code, we have to replace the src and WebContent directories of a project in eclipse.
+It will run as expected in the assignment (will have to change te config.java file for database).
+
+We have implemented a new search button  for createConversation and displayConversation (other thhan the one already in table). The displayConversation button only allows to select from options that are suggested by dropdown and nothing else (as no conversation exists for such users)
+
+We have also implemented the Bonus part where in the displayConversation only that options are shown for which conversation already exists and in the CreateConversation gives only the users for which conversation does not exist. 
