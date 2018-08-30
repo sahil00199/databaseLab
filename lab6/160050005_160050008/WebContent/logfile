@@ -1,0 +1,45 @@
+2018-08-29 18:42:45.553 IST [23740] FATAL:  lock file "postmaster.pid" already exists
+2018-08-29 18:42:45.553 IST [23740] HINT:  Is another postmaster (PID 17507) running in data directory "/home/sahil/postgresql/dbis"?
+2018-08-29 18:46:38.558 IST [23982] LOG:  listening on IPv4 address "127.0.0.1", port 5050
+2018-08-29 18:46:38.647 IST [23982] LOG:  listening on Unix socket "/home/sahil/postgresql/.s.PGSQL.5050"
+2018-08-29 18:46:38.749 IST [23983] LOG:  database system was shut down at 2018-08-29 18:46:35 IST
+2018-08-29 18:46:38.785 IST [23982] LOG:  database system is ready to accept connections
+2018-08-29 18:49:42.378 IST [24151] ERROR:  new row for relation "conversations" violates check constraint "conversations_check"
+2018-08-29 18:49:42.378 IST [24151] DETAIL:  Failing row contains (p1, p1, 7).
+2018-08-29 18:49:42.378 IST [24151] STATEMENT:  insert into conversations values ($1, $2)
+2018-08-29 20:03:00.797 IST [24733] ERROR:  syntax error at or near "%" at character 43
+2018-08-29 20:03:00.797 IST [24733] STATEMENT:  select count(*) from users where uid like %1%;
+2018-08-29 20:03:31.710 IST [24733] ERROR:  column "p1" does not exist at character 40
+2018-08-29 20:03:31.710 IST [24733] STATEMENT:  select count(*) from users where uid = p1;
+2018-08-29 20:41:47.175 IST [28635] ERROR:  insert or update on table "conversations" violates foreign key constraint "conversations_uid2_fkey"
+2018-08-29 20:41:47.175 IST [28635] DETAIL:  Key (uid2)=(y6) is not present in table "users".
+2018-08-29 20:41:47.175 IST [28635] STATEMENT:  insert into conversations values ($1, $2)
+2018-08-29 21:04:43.103 IST [24733] ERROR:  subquery in FROM must have an alias at character 32
+2018-08-29 21:04:43.103 IST [24733] HINT:  For example, FROM (SELECT ...) [AS] foo.
+2018-08-29 21:04:43.103 IST [24733] STATEMENT:  select uid as a, uid as b from (select uid from users);
+2018-08-29 21:15:05.410 IST [29668] ERROR:  syntax error at or near "(" at character 129
+2018-08-29 21:15:05.410 IST [29668] STATEMENT:  select uid as label, uid as value from ((select uid from users where name like $1 or phone like $2 or uid like $3) intersection((select distinct uid1 from conversations, users where uid2 = $4) union (select distinct uid2 from conversations, users where uid1 = $5))) as whatever(uid)
+2018-08-29 21:17:08.324 IST [29746] ERROR:  syntax error at or near "(" at character 129
+2018-08-29 21:17:08.324 IST [29746] STATEMENT:  select uid as label, uid as value from ((select uid from users where name like $1 or phone like $2 or uid like $3) intersection((select distinct uid1 from conversations, users where uid2 = $4) union (select distinct uid2 from conversations, users where uid1 = $5))) as whatever(uid)
+2018-08-29 21:17:15.340 IST [29749] ERROR:  syntax error at or near "(" at character 129
+2018-08-29 21:17:15.340 IST [29749] STATEMENT:  select uid as label, uid as value from ((select uid from users where name like $1 or phone like $2 or uid like $3) intersection((select distinct uid1 from conversations, users where uid2 = $4) union (select distinct uid2 from conversations, users where uid1 = $5))) as whatever(uid)
+2018-08-29 21:18:14.015 IST [24733] ERROR:  syntax error at or near "(" at character 138
+2018-08-29 21:18:14.015 IST [24733] STATEMENT:  select uid as label, uid as value from ((select uid from users where name like '%p%' or phone like '%p%' or uid like '%p%') intersection((select distinct uid1 from conversations, users where uid2 = 'p1') union (select distinct uid2 from conversations, users where uid1 = 'p1'))) as whatever(uid);
+2018-08-29 21:18:28.621 IST [29780] ERROR:  syntax error at or near "(" at character 129
+2018-08-29 21:18:28.621 IST [29780] STATEMENT:  select uid as label, uid as value from ((select uid from users where name like $1 or phone like $2 or uid like $3) intersection((select distinct uid1 from conversations, users where uid2 = $4) union (select distinct uid2 from conversations, users where uid1 = $5))) as whatever(uid)
+2018-08-29 21:18:29.824 IST [29784] ERROR:  syntax error at or near "(" at character 129
+2018-08-29 21:18:29.824 IST [29784] STATEMENT:  select uid as label, uid as value from ((select uid from users where name like $1 or phone like $2 or uid like $3) intersection((select distinct uid1 from conversations, users where uid2 = $4) union (select distinct uid2 from conversations, users where uid1 = $5))) as whatever(uid)
+2018-08-29 21:18:37.790 IST [29794] ERROR:  syntax error at or near "(" at character 130
+2018-08-29 21:18:37.790 IST [29794] STATEMENT:  select uid as label, uid as value from ((select uid from users where name like $1 or phone like $2 or uid like $3) intersection ((select distinct uid1 from conversations, users where uid2 = $4) union (select distinct uid2 from conversations, users where uid1 = $5))) as whatever(uid)
+2018-08-29 21:18:38.531 IST [29796] ERROR:  syntax error at or near "(" at character 130
+2018-08-29 21:18:38.531 IST [29796] STATEMENT:  select uid as label, uid as value from ((select uid from users where name like $1 or phone like $2 or uid like $3) intersection ((select distinct uid1 from conversations, users where uid2 = $4) union (select distinct uid2 from conversations, users where uid1 = $5))) as whatever(uid)
+2018-08-29 21:18:38.712 IST [29797] ERROR:  syntax error at or near "(" at character 130
+2018-08-29 21:18:38.712 IST [29797] STATEMENT:  select uid as label, uid as value from ((select uid from users where name like $1 or phone like $2 or uid like $3) intersection ((select distinct uid1 from conversations, users where uid2 = $4) union (select distinct uid2 from conversations, users where uid1 = $5))) as whatever(uid)
+2018-08-29 21:18:38.886 IST [29798] ERROR:  syntax error at or near "(" at character 130
+2018-08-29 21:18:38.886 IST [29798] STATEMENT:  select uid as label, uid as value from ((select uid from users where name like $1 or phone like $2 or uid like $3) intersection ((select distinct uid1 from conversations, users where uid2 = $4) union (select distinct uid2 from conversations, users where uid1 = $5))) as whatever(uid)
+2018-08-29 21:18:39.025 IST [29800] ERROR:  syntax error at or near "(" at character 130
+2018-08-29 21:18:39.025 IST [29800] STATEMENT:  select uid as label, uid as value from ((select uid from users where name like $1 or phone like $2 or uid like $3) intersection ((select distinct uid1 from conversations, users where uid2 = $4) union (select distinct uid2 from conversations, users where uid1 = $5))) as whatever(uid)
+2018-08-29 21:18:39.180 IST [29801] ERROR:  syntax error at or near "(" at character 130
+2018-08-29 21:18:39.180 IST [29801] STATEMENT:  select uid as label, uid as value from ((select uid from users where name like $1 or phone like $2 or uid like $3) intersection ((select distinct uid1 from conversations, users where uid2 = $4) union (select distinct uid2 from conversations, users where uid1 = $5))) as whatever(uid)
+2018-08-29 21:18:47.878 IST [24733] ERROR:  syntax error at or near "(" at character 139
+2018-08-29 21:18:47.878 IST [24733] STATEMENT:  select uid as label, uid as value from ((select uid from users where name like '%p%' or phone like '%p%' or uid like '%p%') intersection ((select distinct uid1 from conversations, users where uid2 = 'p1') union (select distinct uid2 from conversations, users where uid1 = 'p1'))) as whatever(uid);
