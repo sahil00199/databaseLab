@@ -65,7 +65,7 @@ public class AutoCompleteUser extends HttpServlet {
 			
 			partial = partial + "%";
 			String query = "";
-			System.out.println(location + " " + partial + " " +	 uid);
+			// System.out.println(location + " " + partial + " " +	 uid);
 			if (location.equals("bottom"))
 			{
 				query = "select uid as label, uid as value from ((select uid  from users where name like ? or phone like ? or uid like ?) except"
