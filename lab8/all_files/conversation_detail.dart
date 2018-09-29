@@ -10,6 +10,7 @@ import 'package:trial/session.dart';
 import 'package:trial/global.dart';
 import 'package:trial/home_screen.dart';
 import 'dart:convert';
+import 'package:trial/CreateConversation.dart';
 
 class ConvoDetail extends StatefulWidget {
  final String uid;
@@ -91,7 +92,7 @@ class ConvoDetailState extends State<ConvoDetail> {
                 IconButton(
                     icon: Icon(Icons.create),
                     onPressed: () {
-
+                      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => new CreateConversation()));
                     }
                 ),
 
@@ -132,7 +133,7 @@ class ConvoDetailState extends State<ConvoDetail> {
                 IconButton(
                     icon: Icon(Icons.create),
                     onPressed: () {
-
+                      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => new CreateConversation()));
                     }
                 ),
 

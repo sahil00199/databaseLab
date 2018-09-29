@@ -10,6 +10,7 @@ import 'package:trial/session.dart';
 import 'package:trial/global.dart';
 import 'package:trial/login_screen.dart';
 import 'dart:convert';
+import 'package:trial/CreateConversation.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -80,6 +81,7 @@ class HomeScreenState extends State<HomeScreen> {
                 IconButton(
                     icon: Icon(Icons.create),
                     onPressed: () {
+                      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => new CreateConversation()));
 
                     }
                 ),
@@ -121,6 +123,7 @@ class HomeScreenState extends State<HomeScreen> {
                 IconButton(
                     icon: Icon(Icons.create),
                     onPressed: () {
+                      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => new CreateConversation()));
 
                     }
                 ),
@@ -141,16 +144,19 @@ class HomeScreenState extends State<HomeScreen> {
           new Center(
               child: new Column(
                   children: <Widget>[
-                    new TextField(
-                      controller: _textController,
-                      onChanged: _handleChanged,
-                       decoration: new InputDecoration.collapsed(
+                    new Container(
+                        height: 40.0,
+                        child:  new TextField(
+                          controller: _textController,
+                          onChanged: _handleChanged,
+                          decoration: new InputDecoration.collapsed(
 
-                         border : new OutlineInputBorder(
-                           borderRadius: new BorderRadius.circular(12.0),
-                         ),
-                           hintText: "Search conversation"),
-              ),
+                              border : new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(20.0),
+                              ),
+                              hintText: "Search conversation"),
+                        )
+                    ),
                     new Flexible(                                             //new
                       child: new ListView.builder(                            //new
                       padding: new EdgeInsets.all(8.0),                     //new
