@@ -32,7 +32,7 @@ class HomeScreenState extends State<HomeScreen> {
     List<friend> _chat_temp= [];
     for(int i=0;i<_chat.length;i++)
       {
-        if(_chat[i].uid.startsWith(text))
+        if(_chat[i].uid.startsWith(text) || _chat[i].name.startsWith(text))
           {
             _chat_temp.add(_chat[i]);
           }
@@ -54,8 +54,8 @@ class HomeScreenState extends State<HomeScreen> {
       Map<String, dynamic> returnStuff = json.decode(res.toString());
       print(res.toString());
       for (Map<String, dynamic> d in returnStuff['data']){
-      _chat.add(new friend(uid : d['uid'],last_message : d['last_timestamp'],num_msgs: d['num_msgs']));
-      _chat_new.add(new friend(uid : d['uid'],last_message : d['last_timestamp'],num_msgs: d['num_msgs']));
+      _chat.add(new friend(uid : d['uid'],last_message : d['last_timestamp'],num_msgs: d['num_msgs'],name: d['name']));
+      _chat_new.add(new friend(uid : d['uid'],last_message : d['last_timestamp'],num_msgs: d['num_msgs'],name: d['name']));
     }
 
 
@@ -163,8 +163,9 @@ class HomeScreenState extends State<HomeScreen> {
                         //reverse: true, //new
                         itemBuilder: (context, index){
                           return ListTile(
-                          title: Text(_chat_new[index].uid),
-                            onTap : ()  {Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => new ConvoDetail(uid:_chat_new[index].uid),
+                          title: Text(_chat_new[index].name),
+                            subtitle: _chat_new[index].last_message==null ? Text(_chat_new[index].uid ):Text(_chat_new[index].uid + " " + _chat_new[index].last_message),
+                            onTap : ()  {Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => new ConvoDetail(uid:_chat_new[index].uid,name:_chat_new[index].name),
                           )
                           );
                             },
@@ -187,7 +188,8 @@ class friend extends StatelessWidget{
   final String uid;
   final String last_message;
   final int num_msgs;
-  friend({this.uid,this.last_message,this.num_msgs});
+  final String name;
+  friend({this.uid,this.last_message,this.num_msgs,this.name});
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -197,7 +199,7 @@ class friend extends StatelessWidget{
         children: <Widget>[
           new Container(
             margin: const EdgeInsets.only(right: 16.0),
-            child: new CircleAvatar(child: new Text(uid[0])),
+            child: new CircleAvatar(child: new Text(name[0])),
           ),
           new Column(
             crossAxisAlignment: CrossAxisAlignment.start,

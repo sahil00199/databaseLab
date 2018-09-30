@@ -14,7 +14,8 @@ import 'package:trial/CreateConversation.dart';
 
 class ConvoDetail extends StatefulWidget {
  final String uid;
- ConvoDetail({Key key, @required this.uid}) : super(key:key);
+ final String name;
+ ConvoDetail({Key key, @required this.uid,this.name}) : super(key:key);
   //{
     //uid = u;
   //}
@@ -45,7 +46,7 @@ class ConvoDetailState extends State<ConvoDetail> {
       if (! returnStuff["status"]) {
         print("There was an error in adding the message");
       }
-        Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => new ConvoDetail(uid:widget.uid),
+        Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => new ConvoDetail(uid:widget.uid,name:widget.name),
         )
         );
     }
@@ -121,7 +122,7 @@ class ConvoDetailState extends State<ConvoDetail> {
     }
     else{
       return new Scaffold(
-          appBar: new AppBar(title: const Text("Chats"),
+          appBar: new AppBar(title: new Text(widget.name),
               actions: <Widget>[
                 IconButton(
                     icon: Icon(Icons.home),

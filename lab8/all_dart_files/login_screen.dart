@@ -77,7 +77,7 @@ class LoginScreenState extends State<LoginScreen>
                   onSaved: (val) => _username = val,
                   validator: (val) {
                     return val.length < 1
-                        ? "Username must have atleast 10 chars"
+                        ? "Username must have atleast 1 chars"
                         : null;
                   },
                   decoration: new InputDecoration(labelText: "Username"),

@@ -93,7 +93,7 @@ class CreateConversationState extends State<CreateConversation> {
                       itemBuilder: (context, suggestion) {
                         return ListTile(
                           //leading: Icon(Icons.shopping_cart),
-                         title: Text(suggestion['value']),
+                         title: Text(suggestion['name']),
                           subtitle: Text(suggestion['label']),
                         );
                       },
@@ -102,7 +102,7 @@ class CreateConversationState extends State<CreateConversation> {
                         GlobalStuff globStuff = new GlobalStuff();
                         final CreateConv_URL = globStuff.getBase() + "/CreateConversation";
                         _session.post(CreateConv_URL,{"other_id":suggestion['value']});
-                        Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => new HomeScreen()));
+                        Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => new ConvoDetail(uid:suggestion['value'],name:suggestion['name'])));
                       },
                     )
                     //new
